@@ -19,4 +19,4 @@ Display | IPS LCD, 1B colors, 144Hz, HDR10, Dolby Vision
 
 ## Device picture
 
-[![71-LRY1j6-UHL-SL1500.jpg](https://i.postimg.cc/2SPkDYSb/71-LRY1j6-UHL-SL1500.jpg0](https://postimg.cc/fVfnc6XD) "Xiaomi Pad 6"
+![Xiaomi Pad 6](https://i.postimg.cc/2SPkDYSb/71-LRY1j6-UHL-SL1500.jpg "Xiaomi Pad 6")
