@@ -11,7 +11,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
 # A/B
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+ifeq ($(TARGET_IS_VAB),true)
+# Inherit virtual_ab_ota product
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
+endif
 
 # Inherit Window Extensions
 $(call inherit-product, $(SRC_TARGET_DIR)/product/window_extensions.mk)
@@ -55,44 +58,58 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
     frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml \
+    frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
+    frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.opengles.aep.xml \
-    frameworks/native/data/etc/android.software.opengles.deqp.level-2020-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.opengles.deqp.level.xml \
+    frameworks/native/data/etc/android.hardware.se.omapi.uicc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.se.omapi.uicc.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.light.xml \
+    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml \
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.cdma.xml \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.gsm.xml \
+    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level-1.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version-1_1.xml \
-    frameworks/native/data/etc/android.software.vulkan.deqp.level-2020-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml \
+    frameworks/native/data/etc/android.hardware.wifi.aware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.aware.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
+    frameworks/native/data/etc/android.hardware.wifi.rtt.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.rtt.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.hardware.ethernet.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml \
-    frameworks/native/data/etc/android.software.device_admin.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_admin.xml \
-    frameworks/native/data/etc/android.software.managed_users.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.managed_users.xml \
     frameworks/native/data/etc/android.software.verified_boot.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.verified_boot.xml
+
+ifeq ($(TARGET_IS_VAB),true)
+VULKAN_DEQP_LEVEL := 2020-03-01
+else
+VULKAN_DEQP_LEVEL := 2019-03-01
+endif
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.vulkan.deqp.level-$(VULKAN_DEQP_LEVEL).xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
+
+# Audio configs
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/audio/,$(TARGET_COPY_OUT_VENDOR)/etc)
 
 # Device is a Tablet
 PRODUCT_CHARACTERISTICS := tablet
-TARGET_SCREEN_HEIGHT := 2560
-TARGET_SCREEN_WIDTH := 1600
+TARGET_SCREEN_HEIGHT := 2880
+TARGET_SCREEN_WIDTH := 1800
 
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := 420dpi #440 works aswell but do we actually need it?.
+PRODUCT_AAPT_PREF_CONFIG := 420dpi
 PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
 
-# Boot control
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.1-impl-qti \
     android.hardware.boot@1.1-impl-qti.recovery \
@@ -112,11 +129,13 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@7.0-impl \
     android.hardware.audio.effect@7.0-impl \
     android.hardware.audio.service \
-    android.hardware.soundtrigger@2.2-impl
+    android.hardware.soundtrigger@2.3-impl
 
 PRODUCT_PACKAGES += \
+    audio.bluetooth.default \
+    audio.primary.kona \
     audio.r_submix.default \
-    audio.usb.default
+    audio.usbv2.default \
 
 PRODUCT_PACKAGES += \
     liba2dpoffload \
@@ -140,9 +159,6 @@ PRODUCT_PACKAGES += \
     libvisualizer \
     libvolumelistener
 
-# Audio configs
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/audio/,$(TARGET_COPY_OUT_VENDOR)/etc)
 
 PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
@@ -153,10 +169,8 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    audio.bluetooth.default \
-    android.hardware.bluetooth.audio-impl \
-    android.hardware.bluetooth@1.0.vendor \
-    vendor.qti.hardware.bluetooth_audio@2.0.vendor \
+    android.hardware.bluetooth@1.1.vendor \
+    vendor.qti.hardware.bluetooth_audio@2.1.vendor \
     vendor.qti.hardware.btconfigstore@1.0.vendor \
     vendor.qti.hardware.btconfigstore@2.0.vendor
 
@@ -257,8 +271,13 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health-service.qti \
-    android.hardware.health@2.1.vendor
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service
+    
+ifneq ($(TARGET_IS_VAB),true)
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-impl.recovery
+endif
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -276,9 +295,15 @@ PRODUCT_PACKAGES += \
     ipacm \
     IPACM_cfg.xml
 
+# Keyboard
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/idc/Xiaomi_Keyboard.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Xiaomi_Keyboard.idc
+
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/sm8150-tavil-snd-card_Button_Jack.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/sm8150-tavil-snd-card_Button_Jack.kl \
+    $(LOCAL_PATH)/configs/keylayout/Xiaomi_Smart_Pen_Keyboard.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/Xiaomi_Smart_Pen_Keyboard.kl
+
+PRODUCT_SET_DEBUGFS_RESTRICTIONS := true
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -322,7 +347,6 @@ PRODUCT_PACKAGES += \
     libOmxG711Enc \
     libOmxQcelp13Enc \
     libOmxVdec \
-    libOmxVenc \
     libstagefrighthw
 
 # Overlays
@@ -336,11 +360,11 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Perf
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.perf@2.2.vendor
+    libqti-perfd-client
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service-nabu
+    android.hardware.power-service.xiaomi-libperfmgr
 
 # Public libraries
 PRODUCT_COPY_FILES += \
@@ -348,10 +372,11 @@ PRODUCT_COPY_FILES += \
 
 # RRO support
 PRODUCT_PACKAGES += \
-    SystemUIOverlayNabu \
-    SettingsProviderOverlayNabu \
-    SettingsOverlayNabu \
-    FrameworkResOverlayNabu
+    SystemUIOverlayPipa \
+    SettingsProviderOverlayPipa \
+    SettingsOverlayPipa \
+    FrameworkResOverlayPipa \
+    WifiResCommon
 
 # RemovePackages
 PRODUCT_PACKAGES += \
@@ -366,6 +391,11 @@ PRODUCT_PACKAGES += \
     libvndfwk_detect_jni.qti \
     libvndfwk_detect_jni.qti.vendor
 
+# Rootdir
+PRODUCT_PACKAGES += \
+    fstab.qcom \
+    fstab.qcom_ramdisk
+
 # Filesystems table
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.qcom \
@@ -374,19 +404,16 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     init.class_main.sh \
-    init.qcom.class_core.sh \
+    init.mdm.sh \
+    init.mi.btmac.sh \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.sh \
-    init.qcom.usb.sh \
-    init.qti.chg_policy.sh \
     init.qti.dcvs.sh
 
 PRODUCT_PACKAGES += \
-    init.nabu.perf.rc \
     init.qcom.power.rc \
     init.qcom.rc \
-    init.qcom.usb.rc \
     init.recovery.qcom.rc \
     init.target.rc \
     init.xiaomi.rc \
@@ -404,19 +431,26 @@ PRODUCT_PACKAGES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-    hardware/xiaomi
+    hardware/google/interfaces \
+    hardware/google/pixel \
+    hardware/xiaomi \
+    vendor/qcom/opensource/usb/etc
 
 # Thermal
 PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0-service.qti
 
-# Trust
+# Touch
 PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
+    vendor.lineage.touch@1.0-service.xiaomi
+
+PRODUCT_PACKAGES += \
+    init.qcom.usb.rc \
+    init.qcom.usb.sh
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
+    android.hardware.usb@1.3-service-qti
 
 # Vendor service manager
 PRODUCT_PACKAGES += \
@@ -430,23 +464,20 @@ PRODUCT_PACKAGES += \
     libwifi-hal-ctrl \
     libwifi-hal-qcom \
     vendor.qti.hardware.wifi.hostapd@1.2.vendor \
-    vendor.qti.hardware.wifi.supplicant@2.2.vendor \
-    WifiOverlay \
+    vendor.qti.hardware.wifi.supplicant@2.1.vendor \
+    WifiResCommon \
     wpa_supplicant \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
-    $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
+    $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf
 
-# WiFi Display
+# Wi-Fi Display
 PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor
 
-PRODUCT_BOOT_JARS += \
-    WfdCommon
-
-# Inherit the proprietary files
-$(call inherit-product, vendor/xiaomi/nabu/nabu-vendor.mk)
+# Inherit from vendor blobs
+$(call inherit-product, vendor/xiaomi/pipa/pipa-vendor.mk)

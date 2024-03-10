@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2022 The LineageOS Project
+// Copyright (C) 2021 The LineageOS Project
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -12,8 +12,21 @@ sh_binary {
 }
 
 sh_binary {
-    name: "init.qcom.class_core.sh",
-    src: "bin/init.qcom.class_core.sh",
+    name: "init.mdm.sh",
+    src: "bin/init.mdm.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init.mi.btmac.sh",
+    src: "bin/init.mi.btmac.sh",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.device.rc",
+    src: "etc/init.device.rc",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
@@ -36,20 +49,40 @@ sh_binary {
 }
 
 sh_binary {
-    name: "init.qcom.usb.sh",
-    src: "bin/init.qcom.usb.sh",
-    vendor: true,
-}
-
-sh_binary {
-    name: "init.qti.chg_policy.sh",
-    src: "bin/init.qti.chg_policy.sh",
-    vendor: true,
-}
-
-sh_binary {
     name: "init.qti.dcvs.sh",
     src: "bin/init.qti.dcvs.sh",
+    vendor: true,
+}
+
+// fstab
+soong_config_module_type {
+    name: "xiaomi_kona_rootdir_prebuilt_etc",
+    module_type: "prebuilt_etc",
+    config_namespace: "XIAOMI_KONA_ROOTDIR",
+    variables: ["PARTITION_SCHEME"],
+    properties: ["src"],
+}
+
+soong_config_string_variable {
+    name: "PARTITION_SCHEME",
+    values: ["a", "vab"],
+}
+
+xiaomi_kona_rootdir_prebuilt_etc {
+    name: "fstab.qcom",
+    soong_config_variables: {
+        PARTITION_SCHEME: {
+            a: {
+                src: "etc/fstab.qcom",
+            },
+            vab: {
+                src: "etc/fstab_AB.qcom",
+            },
+            conditions_default: {
+                src: "etc/fstab.qcom",
+            },
+        },
+    },
     vendor: true,
 }
 
@@ -69,10 +102,10 @@ prebuilt_etc {
 }
 
 prebuilt_etc {
-    name: "init.qcom.usb.rc",
-    src: "etc/init.qcom.usb.rc",
-    sub_dir: "init/hw",
-    vendor: true,
+    name: "init.recovery.qcom.rc",
+    src: "etc/init.recovery.qcom.rc",
+    sub_dir: "init",
+    recovery: true,
 }
 
 prebuilt_etc {
@@ -93,12 +126,5 @@ prebuilt_etc {
     name: "ueventd.qcom.rc",
     filename: "ueventd.rc",
     src: "etc/ueventd.qcom.rc",
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "init.nabu.perf.rc",
-    src: "etc/init.nabu.perf.rc",
-    sub_dir: "init",
     vendor: true,
 }
